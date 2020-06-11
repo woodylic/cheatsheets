@@ -7,14 +7,17 @@ gc      git commit -v                                                   # 提交
 gcmsg   git commit -m                                                   # 带注释提交
 gcam    git commit -a -m                                                # 把文件放入暂存区并带注释提交
 
-gcd     git checkout develop                                            # 检出develop分支
+grhh    git reset --hard                                                # 丢弃
+
 gco     git checkout {branch_name}                                      # 检出分支
+gcm     git checkout master                                             # 检出master分支
+gcd     git checkout develop                                            # 检出develop分支
 gcb     git checkout -b {branch_name}                                   # 创建分支
 
 gl      git pull
 
 gp      git push
-gpoat   git push origin --all && git push origin --tags
+gpoat   git push origin --all && git push origin --tags                 # 把本地所有内容包括tag推送至远端
 gpsup   git push --set-upstream origin $(git_current_branch)            # 把本地branch推至远端同名branch，并关联
 ggpush  git push origin ${git_current_branch}                           # 把本地branch推至远端同名branch
 
@@ -24,6 +27,10 @@ gst     git status
 gb      git branch                                                      # 查看本地分支
 gba     git branch -a                                                   # 查看远程分支
 gbd     git branch -d                                                   # 删除分支
+gbda    git branch --no-color --merged | \                              # 删除所有远程不存在的分支
+           command grep -vE "^(\+|\*|\s*(master|develop|dev)\s*$)" | \
+           command xargs -n 1 git branch -d
+ggsup   git branch --set-upstream-to=origin/$(git_current_branch)       # 把本地branch的upstream设为远端同名branch
 
 gf      git fetch
 gfa     git fetch --all --prune
@@ -32,3 +39,8 @@ gstall  git stash --all
 gstaa   git stash apply
 
 gm      git merge
+
+gtv     git tag | sort -V                       # 列出所有tag并排序
+
+glods   git log --graph --pretty --date=short   # 列出分支树（单行）
+glgga   git log --graph --decorate --all        # 列出分支树（多行）
